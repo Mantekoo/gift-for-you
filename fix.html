@@ -1,0 +1,311 @@
+<!DOCTYPE html>
+<html lang="id">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>A Little Surprise for You</title>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@600&family=Poppins:wght@300;500&display=swap"
+      rel="stylesheet"
+    />
+    <style>
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+      body,
+      html {
+        height: 100%;
+        font-family: "Poppins", sans-serif;
+        background: linear-gradient(to bottom right, #fff3e0, #f8bbd0);
+        overflow: hidden;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        text-align: center;
+      }
+
+      .container {
+        position: relative;
+        z-index: 10;
+        padding: 1rem;
+        width: 100%;
+        max-width: 800px;
+        height: 100%;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+      }
+
+      .intro-content {
+        transition: all 0.8s ease-out;
+        position: absolute;
+      }
+      .intro-content.hidden {
+        opacity: 0;
+        transform: translateY(-30px) scale(0.9);
+        pointer-events: none;
+      }
+      h1.title {
+        font-family: "Dancing Script", cursive;
+        font-size: 2.5rem;
+        color: #880e4f;
+        margin-bottom: 1rem;
+      }
+      p.subtitle {
+        color: #555;
+        margin-bottom: 2rem;
+        font-weight: 300;
+      }
+      .btn-bloom {
+        background-color: #d81b60;
+        color: white;
+        border: none;
+        padding: 12px 30px;
+        font-size: 1rem;
+        border-radius: 50px;
+        cursor: pointer;
+        box-shadow: 0 4px 15px rgba(216, 27, 96, 0.3);
+        transition: all 0.3s ease;
+        font-family: "Poppins", sans-serif;
+        font-weight: 500;
+      }
+      .btn-bloom:hover {
+        background-color: #ad1457;
+        transform: translateY(-3px);
+        box-shadow: 0 6px 20px rgba(216, 27, 96, 0.4);
+      }
+
+      .bloom-reveal {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        gap: 20px;
+        opacity: 0;
+        pointer-events: none;
+        transition: opacity 0.5s ease;
+      }
+      .bloom-reveal.active {
+        opacity: 1;
+        pointer-events: auto;
+      }
+
+      .center-bouquet,
+      .side-flower {
+        opacity: 0;
+        filter: drop-shadow(0 10px 15px rgba(0, 0, 0, 0.2));
+        transition: all 1s cubic-bezier(0.34, 1.56, 0.64, 1);
+      }
+
+      .center-bouquet {
+        max-width: 280px;
+        width: 80%;
+        transform: translateY(50px) scale(0.8);
+        z-index: 2;
+      }
+
+      .bloom-reveal.active .center-bouquet {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+      }
+
+      .side-flower {
+        max-width: 180px;
+        width: 60%;
+        transform: scale(0.5);
+        transition-delay: 0.6s;
+      }
+      .bloom-reveal.active .side-flower {
+        opacity: 0.8;
+        transform: scale(1);
+      }
+
+
+    .bloom-message {
+        font-family: 'Dancing Script', cursive;
+        font-size: 1.8rem;
+        color: #880e4f;
+        margin-bottom: 20px;
+        opacity: 0;
+        transform: translateY(-20px);
+        transition: all 0.8s ease-out;
+        transition-delay: 0.3s;
+        width: 100%;
+        text-align: center;
+        z-index: 20;
+    }
+    .bloom-reveal.active .bloom-message {
+        opacity: 1;
+        transform: translateY(0);
+    }
+
+
+    @media (min-width: 768px) {
+        h1.title { font-size: 3.5rem; }
+        
+        .bloom-reveal {
+            position: relative; 
+            flex-direction: row; 
+            align-items: center; 
+            justify-content: center;
+            gap: 0;
+            padding-top: 80px; 
+            width: 100%; 
+        }
+        .bloom-message {
+            font-size: 2.5rem; 
+            position: absolute;
+            width: 100%;
+            left: 0;
+            text-align: center;
+            top: -100px; 
+            transform: translateY(-30px);
+            margin-bottom: 0;
+        }
+        
+        .bloom-reveal.active .bloom-message {
+            transform: translateY(0);
+            top: 0; 
+        }
+        .center-bouquet {
+            max-width: 380px;
+            width: auto;
+            order: 2; 
+            z-index: 10; 
+            position: relative;
+            top: 30px; 
+            margin-bottom: 0;
+        }
+
+        .side-flower {
+            max-width: 250px;
+            width: auto;
+            position: relative;
+            z-index: 1; 
+            margin-top: 100px; 
+        }
+        
+        .side-left {
+            order: 1; 
+            margin-right: -190px; 
+            transform: translateX(-50px) scale(0.5);
+        }
+
+        .side-right {
+            order: 3; 
+            margin-left: -190px; 
+            transform: translateX(50px) scale(0.5);
+        }
+
+        .bloom-reveal.active .side-flower {
+            transform: translateX(0) scale(0.85); 
+            opacity: 1;
+        }
+    }
+      .petal-container {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        pointer-events: none;
+        z-index: 1;
+        overflow: hidden;
+        display: none;
+      }
+      .petal-container.active {
+        display: block;
+      }
+      .petal {
+        position: absolute;
+        top: -20px;
+        font-size: 20px;
+        color: #ff80ab;
+        animation: falling linear infinite;
+      }
+      @keyframes falling {
+        0% {
+          top: -10%;
+          transform: translateX(0) rotate(0deg);
+          opacity: 1;
+        }
+        100% {
+          top: 110%;
+          transform: translateX(100px) rotate(360deg);
+          opacity: 0;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="petal-container" id="petalContainer"></div>
+
+    <div class="container">
+      <div class="intro-content" id="introContent">
+        <h1 class="title">Hey Ayu, I have a little something for you</h1>
+        <p class="subtitle">Tap the button below for a surprise</p>
+        <button class="btn-bloom" id="bloomBtn">See your surprise 🌸</button>
+      </div>
+
+      <div class="bloom-reveal" id="bloomReveal">
+            
+            <h2 class="bloom-message">Hope you like it❤</h2>
+
+            
+            <img 
+                src="pink-roses-bouquet-png-on-transparent-background_11096246.png" 
+                alt="Side Flower" 
+                class="side-flower side-left"
+            >
+
+            <img 
+                src="pngtree-pink-rose-bouquet-with-wrapping-and-ribbon-png-image_20908382.png" 
+                alt="Main Bouquet" 
+                class="center-bouquet"
+            >
+
+            <img 
+                src="pink-roses-bouquet-png-on-transparent-background_11096246.png" 
+                alt="Side Flower" 
+                class="side-flower side-right"
+            >
+        </div>
+
+    <script>
+      document.addEventListener("DOMContentLoaded", () => {
+        const bloomBtn = document.getElementById("bloomBtn");
+        const introContent = document.getElementById("introContent");
+        const bloomReveal = document.getElementById("bloomReveal");
+        const petalContainer = document.getElementById("petalContainer");
+
+        bloomBtn.addEventListener("click", () => {
+          introContent.classList.add("hidden");
+          setTimeout(() => {
+            bloomReveal.classList.add("active");
+          }, 500);
+          petalContainer.classList.add("active");
+          createPetals();
+        });
+
+        function createPetals() {
+          const numberOfPetals = 30;
+          for (let i = 0; i < numberOfPetals; i++) {
+            const petal = document.createElement("div");
+            petal.classList.add("petal");
+            petal.innerHTML = "🌸";
+            petal.style.left = Math.random() * 100 + "vw";
+            const size = Math.random() * 20 + 15;
+            petal.style.fontSize = size + "px";
+            const duration = Math.random() * 4 + 4;
+            petal.style.animationDuration = duration + "s";
+            const delay = Math.random() * 5;
+            petal.style.animationDelay = delay + "s";
+            petalContainer.appendChild(petal);
+          }
+        }
+      });
+    </script>
+  </body>
+</html>
